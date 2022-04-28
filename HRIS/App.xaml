@@ -3,7 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:HRIS"
              xmlns:local1="clr-namespace:HRIS.Controller"
+             xmlns:local2="clr-namespace:HRIS.Model"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              StartupUri="MainWindow.xaml">
+    
     <Application.Resources>
         <!--Staff list-->
         <local1:StaffController x:Key="staffController"/>
@@ -12,5 +15,23 @@
                             MethodName="GetStaffList">
         </ObjectDataProvider>
 
+        <!--Categroy enum-->
+        <ObjectDataProvider x:Key="Categoryvalues"
+                            ObjectType="{x:Type sys:Enum}"
+                            MethodName="GetValues">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="local2:Category"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+        <!--Campus enum-->
+        <ObjectDataProvider x:Key="Campusvalues"
+                            ObjectType="{x:Type sys:Enum}"
+                            MethodName="GetValues">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="local2:Campus"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        
     </Application.Resources>
 </Application>

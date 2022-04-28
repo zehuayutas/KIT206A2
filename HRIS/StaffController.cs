@@ -3,6 +3,7 @@ using HRIS.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,7 +32,8 @@ namespace HRIS.Controller
         //Name filter
         public void FilterByName(string name, int category)
         {
-            if (true)
+
+            if ((Category)category == Category.All)
             {
                 var FilterByName = from Staff e in staffList
                                    where e.GivenName.ToLower().Contains(name.ToLower()) || e.FamilyName.ToLower().Contains(name.ToLower())
@@ -52,12 +54,26 @@ namespace HRIS.Controller
         //Category filter
         public void FilterByCategory(Category category)
         {
-            var FilterByName = from Staff e in staffList
-                               where e.Category == category || category == Category.All
-                               orderby e.GivenName
-                               select e;
-            staffList.Clear();
-            FilterByName.ToList().ForEach(staffList.Add);
+            Debug.WriteLine("Category selected is" + category);
+            if (category != Category.All)
+            {
+
+                var FilterByName = from Staff e in staffList
+                                   where e.Category == category
+                                   orderby e.GivenName
+                                   select e;
+
+                Debug.WriteLine("Filtered Name" + FilterByName.ToList());
+
+                staffListObv.Clear();
+                FilterByName.ToList().ForEach(staffListObv.Add);
+                Debug.WriteLine("Obv list" + FilterByName.ToList().Count());
+            }
+            else {
+                staffListObv.Clear();
+                staffList.ForEach(staffListObv.Add);
+            }
+     
         }
 
 

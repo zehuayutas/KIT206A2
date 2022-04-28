@@ -9,7 +9,7 @@ namespace HRIS.Model
     //The enum of campus for staff
     public enum Campus { All, Hobart, Launceston };
     //The enum of category for staff
-    public enum Category { All, academic, Technical, admin, Casual };
+    public enum Category { All, academic, technical, admin, casual };
 
 
     class Staff

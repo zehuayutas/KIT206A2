@@ -44,7 +44,7 @@ namespace HRIS
         }
 
         //Category filter
-        private void FilterbyCategory(object sender, SelectionChangedEventArgs e)
+        private void FilterbyCategory_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (staffController != null)
             {
