@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace HRIS.Model
 {
-    class Class
-    {
-        //Create a new enum to define type of unitclass
+    //Create a new enum to define type of unitclass
     public enum Type { Lecture, Tutorial, Practical, Workshop };
 
-    class UnitClass
+    class Class
     {
         public int Staff { get; set; }
         public string UnitCode { get; set; }
@@ -26,6 +24,6 @@ namespace HRIS.Model
         {
             return Campus + "\n" + Day + "\n" + StartTime + "-" + EndTime + "\n" + Type + "\n" + Room;
         }
-    }
+    
     }
 }

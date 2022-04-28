@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HRIS.Model
 {
-    public enum Day { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday };
+    public enum Day { Monday=1, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday };
     class Consultation
     {
         public int StaffID { get; set; }

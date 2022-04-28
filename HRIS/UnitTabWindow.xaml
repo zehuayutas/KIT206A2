@@ -59,51 +59,51 @@
                     <!--Class Timetable-->
                 <Label Content="Timetable" Margin="10,10, 10,3" HorizontalAlignment="Stretch"   Grid.Column="0" Grid.Row="3" FontWeight="Bold"/>
                 <Button Content="Add New Class"  Margin="0,10,10,10" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold"  Grid.Column="2" Grid.Row="3"/>
-                <DataGrid x:Name="timetable" AutoGenerateColumns="False" ItemsSource="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center"  Margin="10,10,10,0"  Grid.ColumnSpan="3" Grid.Row="4" >
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Time" Binding="{Binding Time}" Width="10*" />
-                        <DataGridTextColumn Header="Monday" Binding="{Binding Values[0]}" Width="10*">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter  Property="TextWrapping" Value="Wrap" />
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
+                <Grid Name="timeTable" Grid.ColumnSpan="3" Grid.Row="4" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+ 
 
-                        <DataGridTextColumn Header="Tuesday" Binding="{Binding Values[1]}" Width="10*">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter  Property="TextWrapping" Value="Wrap" />
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-
-                        <DataGridTextColumn Header="Wednesday" Binding="{Binding Values[2]}" Width="10*">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter  Property="TextWrapping" Value="Wrap" />
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-
-                        <DataGridTextColumn Header="Thursday" Binding="{Binding Values[3]}" Width="10*">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter  Property="TextWrapping" Value="Wrap" />
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-
-                        <DataGridTextColumn Header="Friday" Binding="{Binding Values[4]}" Width="10*">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter  Property="TextWrapping" Value="Wrap" />
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-                    </DataGrid.Columns>
-
-                </DataGrid>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10*"/>
+                        <ColumnDefinition Width="10*"/>
+                        <ColumnDefinition Width="10*"/>
+                        <ColumnDefinition Width="10*"/>
+                        <ColumnDefinition Width="10*"/>
+                        <ColumnDefinition Width="10*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Monday" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" FontFamily="Segoe UI Emoji" FontSize="16" FontWeight="Bold" />
+                    <Label Content="Tuesday" Grid.Row="0"  Grid.Column="2" HorizontalAlignment="Center" FontFamily="Segoe UI Emoji" FontSize="16" FontWeight="Bold"  />
+                    <Label Content="Wednesday" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" FontFamily="Segoe UI Emoji" FontSize="16" FontWeight="Bold" />
+                    <Label Content="Thursday" Grid.Row="0"  Grid.Column="4" HorizontalAlignment="Center" FontFamily="Segoe UI Emoji" FontSize="16" FontWeight="Bold" />
+                    <Label Content="Friday" Grid.Row="0"  Grid.Column="5" HorizontalAlignment="Center" FontFamily="Segoe UI Emoji" FontSize="16" FontWeight="Bold" />
+                    <Label Content="9:00am-&#x0a;10:00am" Grid.Column="0" Grid.Row="1"  Grid.RowSpan="2" HorizontalAlignment="Center" FontFamily="Segoe UI Emoji" FontSize="12" FontWeight="Bold"  Width="66"/>
+                    <Label Content="10:00am-&#x0a;11:00am" Grid.Column="0" Grid.Row="3" Grid.RowSpan="2" HorizontalAlignment="Center" FontFamily="Segoe UI Emoji" FontSize="12" FontWeight="Bold"   Width="66"/>
+                    <Label Content="11:00am-&#x0a;12:00am" Grid.Column="0" Grid.Row="5" Grid.RowSpan="2" HorizontalAlignment="Center" FontFamily="Segoe UI Emoji" FontSize="12" FontWeight="Bold" Width="66"/>
+                    <Label Content="12:00am-&#x0a;1:00pm" Grid.Column="0" Grid.Row="7" Grid.RowSpan="2" HorizontalAlignment="Center" FontFamily="Segoe UI Emoji" FontSize="12" FontWeight="Bold"   Width="66"/>
+                    <Label Content="1:00pm-&#x0a;2:00pm" Grid.Column="0" Grid.Row="9" Grid.RowSpan="2" HorizontalAlignment="Center" FontFamily="Segoe UI Emoji" FontSize="12" FontWeight="Bold"   Width="66"/>
+                    <Label Content="2:00pm-&#x0a;3:00pm" Grid.Column="0" Grid.Row="11" Grid.RowSpan="2" HorizontalAlignment="Center" FontFamily="Segoe UI Emoji" FontSize="12" FontWeight="Bold"   Width="66"/>
+                    <Label Content="3:00pm-&#x0a;4:00pm" Grid.Column="0" Grid.Row="13" Grid.RowSpan="2" HorizontalAlignment="Center" FontFamily="Segoe UI Emoji" FontSize="12" FontWeight="Bold"    Width="66"/>
+                    <Label Content="4:00pm-&#x0a;5:00pm" Grid.Column="0" Grid.Row="15" Grid.RowSpan="2" HorizontalAlignment="Center" FontFamily="Segoe UI Emoji" FontSize="12" FontWeight="Bold"    Width="66"/>
+               
+                </Grid>
             </Grid>
                 
         </Border>

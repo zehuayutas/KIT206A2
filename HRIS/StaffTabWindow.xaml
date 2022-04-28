@@ -65,22 +65,22 @@
 
             <Label Content="{Binding GivenName}" FontWeight="Bold" Margin="10,11" HorizontalAlignment="Stretch"  VerticalAlignment="Center" Grid.Column="1" Grid.Row="0" />
             <Label Content="{Binding FamilyName}" FontWeight="Bold" Margin="10,11" HorizontalAlignment="Stretch"  VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" />
-            <TextBox Text="{Binding Title}" FontWeight="Bold" Margin="10,7" HorizontalAlignment="Stretch"  VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" />
-            <ComboBox SelectedValue="{Binding Campus}" FontWeight="Bold" Margin="10,5" HorizontalAlignment="Stretch"  VerticalAlignment="Center" Grid.Column="1" Grid.Row="3"  ItemsSource="{Binding Source={StaticResource Campusvalues}}" />
-            <TextBox Text="{Binding Phone}" FontWeight="Bold" Margin="10,7" HorizontalAlignment="Stretch"  VerticalAlignment="Center" Grid.Column="1" Grid.Row="4" />
-            <TextBox Text="{Binding Room}" FontWeight="Bold" Margin="10,7" HorizontalAlignment="Stretch"  VerticalAlignment="Center" Grid.Column="1" Grid.Row="5" />
-            <TextBox Text="{Binding Email}" FontWeight="Bold" Margin="10,7" HorizontalAlignment="Stretch"  VerticalAlignment="Center" Grid.Column="1" Grid.Row="6" />
-            <ComboBox SelectedValue="{Binding Category}" FontWeight="Bold" Margin="10,6,10,5" HorizontalAlignment="Stretch"  VerticalAlignment="Center" Grid.Column="1" Grid.Row="7" ItemsSource="{Binding Source={StaticResource Categoryvalues}}" />
+            <TextBox x:Name="titleInput"  Text="{Binding Title}" FontWeight="Bold" Margin="10,7" HorizontalAlignment="Stretch"  VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" />
+            <ComboBox x:Name="campusInput" SelectedValue="{Binding Campus}" FontWeight="Bold" Margin="10,5" HorizontalAlignment="Stretch"  VerticalAlignment="Center" Grid.Column="1" Grid.Row="3"  ItemsSource="{Binding Source={StaticResource Campusvalues}}" />
+            <TextBox x:Name="phoneInput" Text="{Binding Phone}" FontWeight="Bold" Margin="10,7" HorizontalAlignment="Stretch"  VerticalAlignment="Center" Grid.Column="1" Grid.Row="4" />
+            <TextBox x:Name="roomInput" Text="{Binding Room}" FontWeight="Bold" Margin="10,7" HorizontalAlignment="Stretch"  VerticalAlignment="Center" Grid.Column="1" Grid.Row="5" />
+            <TextBox x:Name="emailInput" Text="{Binding Email}" FontWeight="Bold" Margin="10,7" HorizontalAlignment="Stretch"  VerticalAlignment="Center" Grid.Column="1" Grid.Row="6" />
+            <ComboBox x:Name="cateInput" SelectedValue="{Binding Category}" FontWeight="Bold" Margin="10,6,10,5" HorizontalAlignment="Stretch"  VerticalAlignment="Center" Grid.Column="1" Grid.Row="7" ItemsSource="{Binding Source={StaticResource Categoryvalues}}" />
 
             <Image x:Name="staffPhoto" Grid.Column="3"  Margin="0,0,10,0" HorizontalAlignment="Right"   Grid.Row="0" Grid.RowSpan="5"  Source="https://i.pravatar.cc/300"/>
-            <Button Content="Change Photo"  Grid.Column="2"  Margin="0,3,20,3" HorizontalAlignment="Right" VerticalAlignment="Center"  Grid.Row="6" FontWeight="Bold" Grid.ColumnSpan="2" />
+            <Button Content="Change Photo"  Grid.Column="2"  Margin="0,3,20,3" HorizontalAlignment="Right" VerticalAlignment="Center"  Grid.Row="5" FontWeight="Bold" Grid.ColumnSpan="2" />
 
 
-            <Button Content="Save Changes"  Margin="0,3,20,3" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold"  Grid.Column="2" Grid.Row="8" Grid.ColumnSpan="2" />
+            <Button Content="Save Changes"  Margin="0,3,20,3" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold"  Grid.Column="2" Grid.Row="8" Grid.ColumnSpan="2" Click="UpdateStaff"/>
             <Label Content="Consultations:" Margin="10,3,10,4" HorizontalAlignment="Stretch"  VerticalAlignment="Center" Grid.Column="0" Grid.Row="9"/>
 
             <DataGrid IsReadOnly="True"
-                 
+                 x:Name="consultationList"
                       AutoGenerateColumns="False" Margin="10, 10, 10,10" Foreground="#FF4B7DAE" FontWeight="Bold" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="10">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Day" Width="1*" Binding="{Binding Day}"/>

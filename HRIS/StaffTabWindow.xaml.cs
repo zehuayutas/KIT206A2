@@ -24,16 +24,18 @@ namespace HRIS
     public partial class StaffTabWindow : UserControl
     {
         private StaffController staffController;
+        private ConsultationController consultationController;
         private const string STAFF_LIST_KEY = "staffList";
-
+        private Staff current_Staff = new Staff();
 
         public StaffTabWindow()
         {
             InitializeComponent();
             staffController = (StaffController)(Application.Current.FindResource(STAFF_LIST_KEY) as ObjectDataProvider).ObjectInstance;
+            consultationController = new ConsultationController();
 
-       
-            
+
+
         }
 
         //Name filter
@@ -62,12 +64,36 @@ namespace HRIS
             {
                 Staff staff = (Staff)e.AddedItems[0];
                 StaffDetails.DataContext = staff;
+                current_Staff = staff;
 
+
+                consultationList.ItemsSource = consultationController.GetConsultationList(staff.Id);
+
+                //The following info can only be changed if they are empty
+                if (staff.Phone == "" || staff.Phone == null) { phoneInput.IsEnabled = true; } else { phoneInput.IsEnabled = false; }
+                if (staff.Email == "" || staff.Phone == null) { emailInput.IsEnabled = true; } else { emailInput.IsEnabled = false; }
+                if (staff.Room == "" || staff.Phone == null) { roomInput.IsEnabled = true; } else { roomInput.IsEnabled = false; }
             }
 
         }
 
+        private void UpdateStaff(object sender, RoutedEventArgs e)
+        {
+            Staff s = current_Staff;
+            s.Phone = phoneInput.Text;
+            s.Email = emailInput.Text;
+            s.Room = roomInput.Text;
+            s.Title = titleInput.Text;
 
-        
+            if ((Category)cateInput.SelectedIndex != 0)
+            {
+                s.Category = (Category)cateInput.SelectedIndex;
+            }
+
+            s.Campus = (Campus)campusInput.SelectedIndex;
+      
+            
+            staffController.UpdateStaffDetails(current_Staff);
+        }
     }
 }

@@ -94,6 +94,12 @@ namespace HRIS.Controller
 
         }
 
+        //Update staff
+        public void UpdateStaffDetails(Staff s)
+        {
+            DBAdapter.GetAllStaff();
+        }
+
     }
 
 

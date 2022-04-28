@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HRIS.Model;
 using MySql.Data.MySqlClient;
-
+using Type = HRIS.Model.Type;
 
 namespace HRIS.Database
 {
@@ -35,7 +35,7 @@ namespace HRIS.Database
         {
             if (conn == null)
             {
-                string connectionString = String.Format("Database={0};Data Source={1};User Id={2};Password={3}; SslMode=none; Convert Zero Datetime=True", db, server, user, pass);
+                string connectionString = String.Format("Database={0};Data Source={1};User Id={2};Password={3}; SslMode=none; Convert Zero Datetime=True; Allow User Variables=True", db, server, user, pass);
                 conn = new MySqlConnection(connectionString);
             }
             return conn;
@@ -148,6 +148,51 @@ namespace HRIS.Database
             return s;
         }
 
+
+        //Get One Staff Info
+        public static void UpdateStaffDetails(Staff s)
+        {
+            MySqlConnection conn = GetConnection();
+            MySqlDataReader rdr = null;
+
+            Debug.WriteLine("updating");
+            try
+            {
+                conn.Open();
+
+                MySqlCommand cmd = new MySqlCommand("update staff set title = ?title, " +
+                                                    "phone = ?phone, room = ?room, photo = ?photo, email = ?email, campus= ?campus, category= ?category" +
+                                                    " where id = ?id ", conn);
+
+                cmd.Parameters.AddWithValue("title", s.Title);
+                cmd.Parameters.AddWithValue("phone", s.Phone);
+                cmd.Parameters.AddWithValue("room", s.Room);
+                cmd.Parameters.AddWithValue("photo", s.Photo);
+                cmd.Parameters.AddWithValue("email", s.Email);
+                cmd.Parameters.AddWithValue("campus", s.Campus.ToString());
+                cmd.Parameters.AddWithValue("category", s.Category.ToString());
+                cmd.Parameters.AddWithValue("id", s.Id);
+                rdr = cmd.ExecuteReader();
+
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine("Error connecting to database: " + e);
+            }
+            finally
+            {
+                if (rdr != null)
+                {
+                    rdr.Close();
+                }
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+        }
+
         //Get all Units
         public static List<Unit> GetAllUnits()
         {
@@ -195,6 +240,45 @@ namespace HRIS.Database
 
             return units;
         }
+
+        //Get all Units
+        public static void AddNewUnit(Unit u)
+        {
+
+            MySqlConnection conn = GetConnection();
+            MySqlDataReader rdr = null;
+            Debug.WriteLine("Staff is" + u.Coordinator);
+            try
+            {
+                conn.Open();
+
+                MySqlCommand cmd = new MySqlCommand("insert into unit(code, title, coordinator) values(?code, ?title, ?coordinator)", conn);
+ 
+
+                cmd.Parameters.AddWithValue("code", u.Code);
+                cmd.Parameters.AddWithValue("title", u.Title);
+                cmd.Parameters.AddWithValue("coordinator", u.Coordinator);
+
+                rdr = cmd.ExecuteReader();
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine("Error connecting to database: " + e);
+            }
+            finally
+            {
+                if (rdr != null)
+                {
+                    rdr.Close();
+                }
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+        }
+
 
         //Get all one staff's consultations
         public static List<Consultation> GetConsultationsByStaff(int staffId)
@@ -244,6 +328,59 @@ namespace HRIS.Database
             }
 
             return consultations;
+        }
+
+        //Get all one unit's classes
+        public static List<Class> GetUnitClasses(string unitCode)
+        {
+            List<Class> classes = new List<Class>();
+
+            MySqlConnection conn = GetConnection();
+            MySqlDataReader rdr = null;
+
+            try
+            {
+                conn.Open();
+
+                MySqlCommand cmd = new MySqlCommand("select staff, unit_code, campus, day, start, end, type, room" +
+                                                      " from class where unit_code = ?unitCode", conn);
+
+                cmd.Parameters.AddWithValue("unitCode", unitCode);
+                rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    //Create new Unit and set the value of each variable in Unit list
+                    classes.Add(new Class
+                    {
+                        Staff = rdr.GetInt32(0),
+                        UnitCode = rdr.GetString(1),
+                        Campus = ParseEnum<Campus>(rdr.GetString(2)),
+                        Day = ParseEnum<Day>(rdr.GetString(3)),
+                        StartTime = rdr.GetTimeSpan(4),
+                        EndTime = rdr.GetTimeSpan(5),
+                        Type = ParseEnum<Type>(rdr.GetString(6)),
+                        Room = rdr.GetString(7)
+                    });
+                }
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine("Error connecting to database: " + e);
+            }
+            finally
+            {
+                if (rdr != null)
+                {
+                    rdr.Close();
+                }
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            return classes;
         }
     }
 }

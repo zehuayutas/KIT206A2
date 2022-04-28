@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace HRIS.Model
 {
     //The enum of campus for staff
-    public enum Campus { All, Hobart, Launceston };
+    public enum Campus { Hobart, Launceston };
     //The enum of category for staff
     public enum Category { All, academic, technical, admin, casual };
 

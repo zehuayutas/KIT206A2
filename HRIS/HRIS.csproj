@@ -98,6 +98,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddClassDialog.xaml.cs">
+      <DependentUpon>AddClassDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AddConsultation.xaml.cs">
+      <DependentUpon>AddConsultation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AddUnitDialog.xaml.cs">
       <DependentUpon>AddUnitDialog.xaml</DependentUpon>
     </Compile>
@@ -111,11 +117,20 @@
     <Compile Include="StaffTabWindow.xaml.cs">
       <DependentUpon>StaffTabWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TimeTableItem.cs" />
     <Compile Include="Unit.cs" />
     <Compile Include="UnitController.cs" />
     <Compile Include="UnitTabWindow.xaml.cs">
       <DependentUpon>UnitTabWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="AddClassDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddConsultation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AddUnitDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

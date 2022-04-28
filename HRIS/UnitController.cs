@@ -29,6 +29,12 @@ namespace HRIS.Controller
             return unitListObv;
         }
 
+        public void AddToObvList(Unit u)
+        {
+            this.unitListObv.Add(u);
+        }
+
+
         //Code and Title filter
         public void FilterByCodeOrTitle(string key)
         {
@@ -46,7 +52,9 @@ namespace HRIS.Controller
             else
             {
                 var Filter = from Unit u in unitList
-                             where u.Title.ToLower().Contains(key.ToLower())
+                             where u.Title.ToLower().Contains(key.ToLower()) || u.Code.ToLower().Contains(key.ToLower())
+
+
                              select u;
                 unitListObv.Clear();
                 Filter.ToList().ForEach(unitListObv.Add);
@@ -54,5 +62,9 @@ namespace HRIS.Controller
 
         }
 
+        public void AddNewUnit(Unit u) {
+            Debug.WriteLine("Code is" + u.Code);
+            DBAdapter.AddNewUnit(u);
+        }
     }
 }
