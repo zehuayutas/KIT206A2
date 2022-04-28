@@ -32,6 +32,15 @@
                 <x:Type TypeName="local2:Campus"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
+
+        <!--Unit list-->
+        <local1:UnitController x:Key="unitController"/>
+        <ObjectDataProvider x:Key="unitList"
+                            ObjectInstance="{StaticResource unitController}"
+                            MethodName="GetUnitList">
+        </ObjectDataProvider>
         
+        
+
     </Application.Resources>
 </Application>

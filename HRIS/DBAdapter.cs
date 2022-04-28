@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -95,10 +96,11 @@ namespace HRIS.Database
         }
 
         //Get One Staff Info
-        public static Staff GetStaffDetails(Staff s)
+        public static Staff GetStaffByID(int id)
         {
             MySqlConnection conn = GetConnection();
             MySqlDataReader rdr = null;
+            Staff s = new Staff();
 
             try
             {
@@ -108,7 +110,7 @@ namespace HRIS.Database
                                                     "phone, room, photo, email, campus, category" +
                                                     " from staff where id = ?id ", conn);
 
-                cmd.Parameters.AddWithValue("id", s.Id);
+                cmd.Parameters.AddWithValue("id", id);
                 rdr = cmd.ExecuteReader();
 
                 while (rdr.Read())
@@ -144,6 +146,104 @@ namespace HRIS.Database
             }
 
             return s;
+        }
+
+        //Get all Units
+        public static List<Unit> GetAllUnits()
+        {
+            List<Unit> units = new List<Unit>();
+
+
+  
+
+            MySqlConnection conn = GetConnection();
+            MySqlDataReader rdr = null;
+
+            try
+            {
+                conn.Open();
+
+                MySqlCommand cmd = new MySqlCommand("select coordinator, code, title from unit order by code", conn);
+                rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    //Create new Unit and set the value of each variable in Unit list
+                    units.Add(new Unit
+                    {
+                        Coordinator = rdr.GetInt32(0),
+                        Code = rdr.GetString(1),
+                        Title = rdr.GetString(2)
+                    });
+                }
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine("Error connecting to database: " + e);
+            }
+            finally
+            {
+                if (rdr != null)
+                {
+                    rdr.Close();
+                }
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            return units;
+        }
+
+        //Get all one staff's consultations
+        public static List<Consultation> GetConsultationsByStaff(int staffId)
+        {
+            List<Consultation> consultations = new List<Consultation>();
+            MySqlConnection conn = GetConnection();
+            MySqlDataReader rdr = null;
+
+            try
+            {
+                conn.Open();
+
+
+                //Sql to search events of staff
+                MySqlCommand cmd = new MySqlCommand("select staff_id, day, start, end from consultation " +
+                                                    "where staff_id=?id", conn);
+
+                cmd.Parameters.AddWithValue("id", staffId);
+                rdr = cmd.ExecuteReader();
+
+                //Loop to store events
+                while (rdr.Read())
+                {
+                    consultations.Add(new Consultation
+                    {
+                        StaffID = rdr.GetInt32(0),
+                        Day = ParseEnum<Day>(rdr.GetString(1)),
+                        StartTime = rdr.GetTimeSpan(2),
+                        EndTime = rdr.GetTimeSpan(3)
+                    });
+                }
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine("Error connecting to database: " + e);
+            }
+            finally
+            {
+                if (rdr != null)
+                {
+                    rdr.Close();
+                }
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            return consultations;
         }
     }
 }

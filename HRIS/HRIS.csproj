@@ -102,7 +102,9 @@
       <DependentUpon>AddUnitDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Class.cs" />
+    <Compile Include="ClassController.cs" />
     <Compile Include="Consultation.cs" />
+    <Compile Include="ConsultationController.cs" />
     <Compile Include="DBAdapter.cs" />
     <Compile Include="Staff.cs" />
     <Compile Include="StaffController.cs" />
@@ -110,6 +112,7 @@
       <DependentUpon>StaffTabWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Unit.cs" />
+    <Compile Include="UnitController.cs" />
     <Compile Include="UnitTabWindow.xaml.cs">
       <DependentUpon>UnitTabWindow.xaml</DependentUpon>
     </Compile>

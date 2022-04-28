@@ -54,7 +54,7 @@ namespace HRIS.Controller
         //Category filter
         public void FilterByCategory(Category category)
         {
-            Debug.WriteLine("Category selected is" + category);
+
             if (category != Category.All)
             {
 
@@ -63,25 +63,35 @@ namespace HRIS.Controller
                                    orderby e.GivenName
                                    select e;
 
-                Debug.WriteLine("Filtered Name" + FilterByName.ToList());
 
                 staffListObv.Clear();
                 FilterByName.ToList().ForEach(staffListObv.Add);
-                Debug.WriteLine("Obv list" + FilterByName.ToList().Count());
+
             }
             else {
                 staffListObv.Clear();
                 staffList.ForEach(staffListObv.Add);
             }
-     
+
         }
 
 
         //Get staff details
-        public Staff GetStaffDetails(Staff staff)
+        public Staff GetStaffByID(int id)
         {
-            staff = DBAdapter.GetStaffDetails(staff);
-            return staff;
+            return DBAdapter.GetStaffByID(id);
+        }
+
+        public int GetStaffIndex(int id) {
+
+            List<int> staffIdList = new List<int>();
+            foreach( Staff s in staffList ){
+                staffIdList.Add(s.Id);
+            }
+
+            return staffIdList.IndexOf(id);
+
+
         }
 
     }

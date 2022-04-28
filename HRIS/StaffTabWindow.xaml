@@ -83,9 +83,9 @@
                  
                       AutoGenerateColumns="False" Margin="10, 10, 10,10" Foreground="#FF4B7DAE" FontWeight="Bold" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="10">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Day" Width="75" Binding="{Binding Day}"/>
-                    <DataGridTextColumn Header="Start" Width="150" Binding="{Binding StartTime}"/>
-                    <DataGridTextColumn Header="End" Width="150" Binding="{Binding EndTime}"/>
+                    <DataGridTextColumn Header="Day" Width="1*" Binding="{Binding Day}"/>
+                    <DataGridTextColumn Header="Start" Width="2*" Binding="{Binding StartTime}"/>
+                    <DataGridTextColumn Header="End" Width="2*" Binding="{Binding EndTime}"/>
                 </DataGrid.Columns>
             </DataGrid>
             

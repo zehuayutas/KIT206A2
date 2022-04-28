@@ -31,6 +31,8 @@ namespace HRIS
         {
             InitializeComponent();
             staffController = (StaffController)(Application.Current.FindResource(STAFF_LIST_KEY) as ObjectDataProvider).ObjectInstance;
+
+       
             
         }
 
@@ -58,7 +60,7 @@ namespace HRIS
         {
             if (e.AddedItems.Count > 0)
             {
-                Staff staff = staffController.GetStaffDetails((Staff)e.AddedItems[0]);
+                Staff staff = (Staff)e.AddedItems[0];
                 StaffDetails.DataContext = staff;
 
             }
