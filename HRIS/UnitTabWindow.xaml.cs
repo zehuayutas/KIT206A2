@@ -87,7 +87,7 @@ namespace HRIS
 
 
 
-        //Set the time table
+        //Set the time table for class
         public static int WORK_START_TIME = 9;   //define the start time displayed in the timetable
         public static int WORK_END_TIME = 17;    //define the end time displayed in the timetable
         public static int WORK_DAYS = 5;
