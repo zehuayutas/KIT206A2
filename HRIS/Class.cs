@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HRIS.Model
 {
-    //Create a new enum to define type of unitclass
+    //Create a new enum to define type of unit class
     public enum Type { Lecture, Tutorial, Practical, Workshop };
 
     class Class
