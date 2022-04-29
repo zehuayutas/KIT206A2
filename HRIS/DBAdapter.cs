@@ -15,7 +15,7 @@ namespace HRIS.Database
         //Database connection info
         private const string db = "hris";
         private const string user = "kit206g13a";
-        private const string pass = "group13a";
+        private const string pass = "group1313";
         private const string server = "alacritas.cis.utas.edu.au";
 
         private static MySqlConnection conn = null;
