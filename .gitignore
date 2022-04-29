@@ -172,14 +172,14 @@ publish/
 # Publish Web Output
 *.[Pp]ublish.xml
 *.azurePubxml
-# Note: Comment the next line if you want to checkin your web deploy settings,
+# Note: If you want to check your network deployment settings, please comment the next line,
 # but database connection strings (with potential passwords) will be unencrypted
 *.pubxml
 *.publishproj
 
 # Microsoft Azure Web App publish settings. Comment the next line if you want to
 # checkin your Azure Web App publish settings, but sensitive information contained
-# in these scripts will be unencrypted
+# it will be unencrypted in these scripts
 PublishScripts/
 
 # NuGet Packages
@@ -241,8 +241,8 @@ orleans.codegen.cs
 # RIA/Silverlight projects
 Generated_Code/
 
-# Backup & report files from converting an old project file
-# to a newer Visual Studio version. Backup files are not needed,
+# Backup and report files by converting old project files
+# to a newer Visual Studio version. No need to backup files,,
 # because we have git ;-)
 _UpgradeReport_Files/
 Backup*/
