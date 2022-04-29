@@ -17,6 +17,7 @@ namespace HRIS.Controller
 
             //consultationList = DBAdapter.GetConsultationsByStaff();
             //consultationListObv = new ObservableCollection<Consultation>(consultationList);
+            //
         }
 
         public List<Class> GetClassList(string unitCode)
