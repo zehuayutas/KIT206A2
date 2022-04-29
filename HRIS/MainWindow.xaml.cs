@@ -18,6 +18,7 @@ namespace HRIS
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    ///
     public partial class MainWindow : Window
     {
         private UnitTabWindow unitTabWindow;
