@@ -26,8 +26,6 @@ namespace HRIS
         private const string STAFF_LIST_KEY = "staffList";
         private UnitController unitController;
         private StaffController staffController;
-        private bool isAdded = false;
-
 
         public AddUnitDialog()
         {

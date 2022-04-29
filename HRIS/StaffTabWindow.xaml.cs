@@ -18,9 +18,7 @@ using System.Windows.Shapes;
 
 namespace HRIS
 {
-    /// <summary>
-    /// Interaction logic for StaffTabWindow.xaml
-    /// </summary>
+
     public partial class StaffTabWindow : UserControl
     {
         private StaffController staffController;

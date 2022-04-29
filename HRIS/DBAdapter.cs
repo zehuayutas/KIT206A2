@@ -155,7 +155,6 @@ namespace HRIS.Database
             MySqlConnection conn = GetConnection();
             MySqlDataReader rdr = null;
 
-            Debug.WriteLine("updating");
             try
             {
                 conn.Open();
@@ -247,7 +246,7 @@ namespace HRIS.Database
 
             MySqlConnection conn = GetConnection();
             MySqlDataReader rdr = null;
-            Debug.WriteLine("Staff is" + u.Coordinator);
+
             try
             {
                 conn.Open();
@@ -257,6 +256,44 @@ namespace HRIS.Database
 
                 cmd.Parameters.AddWithValue("code", u.Code);
                 cmd.Parameters.AddWithValue("title", u.Title);
+                cmd.Parameters.AddWithValue("coordinator", u.Coordinator);
+
+                rdr = cmd.ExecuteReader();
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine("Error connecting to database: " + e);
+            }
+            finally
+            {
+                if (rdr != null)
+                {
+                    rdr.Close();
+                }
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+        }
+
+
+        //Get all Units
+        public static void UpdateUnit(Unit u)
+        {
+
+            MySqlConnection conn = GetConnection();
+            MySqlDataReader rdr = null;
+
+            try
+            {
+                conn.Open();
+
+                MySqlCommand cmd = new MySqlCommand("update unit setvalue set coordinator = ?coordinator where code = ?code)", conn);
+
+
+                cmd.Parameters.AddWithValue("code", u.Code);
                 cmd.Parameters.AddWithValue("coordinator", u.Coordinator);
 
                 rdr = cmd.ExecuteReader();
@@ -381,6 +418,48 @@ namespace HRIS.Database
             }
 
             return classes;
+        }
+
+        //Add new Class
+        public static void AddNewClass(Class c)
+        {
+
+            MySqlConnection conn = GetConnection();
+            MySqlDataReader rdr = null;
+            try
+            {
+                conn.Open();
+
+                MySqlCommand cmd = new MySqlCommand("insert into class(unit_code, campus, day, start, end, type, room, staff) values(?unit_code, ?campus, ?day, ?start, ?end, ?type, ?room, ?staff)", conn);
+
+
+                cmd.Parameters.AddWithValue("unit_code", c.UnitCode);
+                cmd.Parameters.AddWithValue("campus", c.Campus.ToString());
+                cmd.Parameters.AddWithValue("day", c.Day.ToString());
+                cmd.Parameters.AddWithValue("start", c.StartTime);
+                cmd.Parameters.AddWithValue("end", c.EndTime);
+                cmd.Parameters.AddWithValue("type", c.Type.ToString());
+                cmd.Parameters.AddWithValue("room", c.Room.ToString());
+                cmd.Parameters.AddWithValue("staff", c.Staff);
+
+                rdr = cmd.ExecuteReader();
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine("Error connecting to database: " + e);
+            }
+            finally
+            {
+                if (rdr != null)
+                {
+                    rdr.Close();
+                }
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
         }
     }
 }

@@ -17,9 +17,7 @@ using System.Windows.Shapes;
 
 namespace HRIS
 {
-    /// <summary>
-    /// Interaction logic for UnitTabWindow.xaml
-    /// </summary>
+
     public partial class UnitTabWindow : UserControl
     {
         private const string UNIT_LIST_KEY = "unitList";
@@ -28,6 +26,7 @@ namespace HRIS
         private StaffController staffController;
         private ClassController classController;
         private List<int> insertedindices= new List<int>();
+        Unit currentUnit= new Unit();
 
         public UnitTabWindow()
         {
@@ -52,9 +51,14 @@ namespace HRIS
 
                 Unit unit = (Unit)e.AddedItems[0];
                 unitDetails.DataContext = unit;
+                currentUnit = unit;
                 unitCoordinator.SelectedIndex = staffController.GetStaffIndex(unit.Coordinator);
+                addClassBtn.IsEnabled = true;
+                saveChangesBtn.IsEnabled = true;
 
-                LoadClassTimetable(unit, staffController.GetStaffList()[unitCoordinator.SelectedIndex]);
+
+                LoadClassTimetable(unit, staffController.GetStaffList()[staffController.GetStaffIndex(unit.Coordinator)]);
+
             }
 
         }
@@ -85,11 +89,12 @@ namespace HRIS
         public static int WORK_DAYS = 5;
         private void LoadClassTimetable(Unit u, Staff s)
         {
-            //remove classes from previously selected class
+            //remove classes from previously selected Unit
             if (insertedindices != null && insertedindices.Count > 0) {
                 foreach (int idx in insertedindices) {
-                    timeTable.Children.RemoveAt(idx);
-               
+                    Debug.WriteLine("index to delete" + idx);
+                    timeTable.Children.RemoveAt(15);
+                    
                 }
             }
 
@@ -106,7 +111,7 @@ namespace HRIS
                 Label label = new Label();
                 if ((c.StartTime.Hours - WORK_START_TIME) * 2 + 1 > 0)
                 {
-                    label.SetValue(Grid.RowProperty, (c.StartTime.Hours - WORK_START_TIME) * 2 + 1);
+                    label.SetValue(Grid.RowProperty, (c.StartTime.Hours - WORK_START_TIME) * 2 + c.StartTime.Minutes/30+ 1);
                 }
                 else { label.SetValue(Grid.RowProperty, 1); }
 
@@ -115,14 +120,42 @@ namespace HRIS
                 }
 
                 label.SetValue(Grid.ColumnProperty, (int)c.Day);
-                label.Background = (Brush)bgColour.ConvertFrom("#FF00FFFF");
+                if (c.Type == Model.Type.Workshop) { label.Background = (Brush)bgColour.ConvertFrom("#FF00FFFF"); }
+                if (c.Type == Model.Type.Lecture) { label.Background = (Brush)bgColour.ConvertFrom("#FF7CFC00"); }
+                if (c.Type == Model.Type.Tutorial) { label.Background = (Brush)bgColour.ConvertFrom("#FFFFFF00"); }
+                if (c.Type == Model.Type.Practical) { label.Background = (Brush)bgColour.ConvertFrom("#FFFF8C00"); }
 
-                label.Content = String.Format("Unit Code: {0}\nType: {1}\nLocation: {2}\nCampus: {3}\nStaff: {4}", u.Code, c.Type, c.Room, c.Campus, s.ToString());
+
+                label.Content = String.Format("{0}\n{1}\nRoom:{2}\n{3}\n{4}", u.Code, c.Type, c.Room, c.Campus, s.ToString());
                 timeTable.Children.Add(label);
 
                 insertedindices.Add(timeTable.Children.IndexOf(label));
                 Debug.WriteLine("index added" + timeTable.Children.IndexOf(label));
             }
+        }
+
+        //Add New Class
+        private void AddNewClass(object sender, RoutedEventArgs e)
+        {
+            AddClassDialog addClassDialog = new AddClassDialog();
+            addClassDialog.unitCode = currentUnit.Code;
+            addClassDialog.ShowDialog();
+
+            if (addClassDialog.DialogResult == true && currentUnit.Code != null)
+            {
+                LoadClassTimetable(currentUnit, staffController.GetStaffList()[staffController.GetStaffIndex(currentUnit.Coordinator)]);
+            }
+
+        }
+
+        //update Unit
+        private void UpdateUnit(object sender, RoutedEventArgs e)
+        {
+            Unit u = currentUnit;
+            u.Coordinator = staffController.GetStaffList()[unitCoordinator.SelectedIndex].Id;
+            unitController.UpdateUnit(u);
+
+
         }
     }
 }

@@ -24,5 +24,10 @@ namespace HRIS.Controller
             classList = DBAdapter.GetUnitClasses(unitCode);
             return classList;
         }
+
+        public void AddNewClass(Class c) 
+        {
+            DBAdapter.AddNewClass(c);
+        }
     }
 }

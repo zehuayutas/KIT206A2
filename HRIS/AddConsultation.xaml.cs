@@ -23,5 +23,19 @@ namespace HRIS
         {
             InitializeComponent();
         }
+
+
+        private void Cancel(object sender, RoutedEventArgs e)
+        {
+
+            Close();
+        }
+
+        private void Confirm(object sender, RoutedEventArgs e)
+        {
+
+
+            Close();
+        }
     }
 }

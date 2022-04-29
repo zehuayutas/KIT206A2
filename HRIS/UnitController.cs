@@ -63,8 +63,12 @@ namespace HRIS.Controller
         }
 
         public void AddNewUnit(Unit u) {
-            Debug.WriteLine("Code is" + u.Code);
             DBAdapter.AddNewUnit(u);
+        }
+
+        public void UpdateUnit(Unit u) 
+        {
+            DBAdapter.UpdateUnit(u);
         }
     }
 }

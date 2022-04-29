@@ -24,6 +24,24 @@
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
 
+        <!--Day enum-->
+        <ObjectDataProvider x:Key="Dayvalues"
+                            ObjectType="{x:Type sys:Enum}"
+                            MethodName="GetValues">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="local2:Day"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+        <!--Type enum-->
+        <ObjectDataProvider x:Key="Typevalues"
+                            ObjectType="{x:Type sys:Enum}"
+                            MethodName="GetValues">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="local2:Type"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
         <!--Campus enum-->
         <ObjectDataProvider x:Key="Campusvalues"
                             ObjectType="{x:Type sys:Enum}"
@@ -39,8 +57,26 @@
                             ObjectInstance="{StaticResource unitController}"
                             MethodName="GetUnitList">
         </ObjectDataProvider>
-        
-        
+
+        <!--Time Hours-->
+        <x:Array x:Key="TimeHours" Type="sys:String">
+            <sys:String>09</sys:String>
+            <sys:String>10</sys:String>
+            <sys:String>11</sys:String>
+            <sys:String>12</sys:String>
+            <sys:String>13</sys:String>
+            <sys:String>14</sys:String>
+            <sys:String>15</sys:String>
+            <sys:String>16</sys:String>
+            <sys:String>17</sys:String>
+        </x:Array>
+
+
+        <!--Time Hours-->
+        <x:Array x:Key="TimeMinutes" Type="sys:String">
+            <sys:String>00</sys:String>
+            <sys:String>30</sys:String>
+        </x:Array>
 
     </Application.Resources>
 </Application>
