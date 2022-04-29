@@ -63,6 +63,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
     <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
@@ -102,8 +103,8 @@
     <Compile Include="AddClassDialog.xaml.cs">
       <DependentUpon>AddClassDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AddConsultation.xaml.cs">
-      <DependentUpon>AddConsultation.xaml</DependentUpon>
+    <Compile Include="AddConsultationDialog.xaml.cs">
+      <DependentUpon>AddConsultationDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="AddUnitDialog.xaml.cs">
       <DependentUpon>AddUnitDialog.xaml</DependentUpon>
@@ -128,7 +129,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AddConsultation.xaml">
+    <Page Include="AddConsultationDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -183,6 +184,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\profilephoto.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

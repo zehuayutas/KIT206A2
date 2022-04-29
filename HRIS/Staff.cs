@@ -22,7 +22,7 @@ namespace HRIS.Model
         public string Phone { get; set; }
         public string Room { get; set; }
         public string Email { get; set; }
-        public string Photo { get; set; }
+        public byte[] Photo { get; set; }
         public Category Category { get; set; }
 
 

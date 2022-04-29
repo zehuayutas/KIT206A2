@@ -26,5 +26,14 @@ namespace HRIS.Controller
             consultationList = DBAdapter.GetConsultationsByStaff(id);
             return consultationList;
         }
+
+        public void AddNewConsultation(Consultation c) {
+            DBAdapter.AddNewConsultation(c);
+        }
+
+        public void DeleteConsultation(Consultation c)
+        {
+            DBAdapter.DeleteConsultation(c);
+        }
     }
 }

@@ -2,6 +2,7 @@
 using HRIS.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -52,12 +53,15 @@ namespace HRIS
                 Unit unit = (Unit)e.AddedItems[0];
                 unitDetails.DataContext = unit;
                 currentUnit = unit;
+
+
                 unitCoordinator.SelectedIndex = staffController.GetStaffIndex(unit.Coordinator);
                 addClassBtn.IsEnabled = true;
                 saveChangesBtn.IsEnabled = true;
 
 
-                LoadClassTimetable(unit, staffController.GetStaffList()[staffController.GetStaffIndex(unit.Coordinator)]);
+
+                LoadClassTimetable(unit);
 
             }
 
@@ -87,7 +91,7 @@ namespace HRIS
         public static int WORK_START_TIME = 9;   //define the start time displayed in the timetable
         public static int WORK_END_TIME = 17;    //define the end time displayed in the timetable
         public static int WORK_DAYS = 5;
-        private void LoadClassTimetable(Unit u, Staff s)
+        private void LoadClassTimetable(Unit u)
         {
             //remove classes from previously selected Unit
             if (insertedindices != null && insertedindices.Count > 0) {
@@ -97,14 +101,13 @@ namespace HRIS
                     
                 }
             }
+           
 
             insertedindices.Clear();
 
             BrushConverter bgColour = new BrushConverter();
 
             List<Class> classList = classController.GetClassList(u.Code);
-
-            string displayContent="";//the content displayed on a cell
 
             foreach (Class c in classList){
 
@@ -126,7 +129,7 @@ namespace HRIS
                 if (c.Type == Model.Type.Practical) { label.Background = (Brush)bgColour.ConvertFrom("#FFFF8C00"); }
 
 
-                label.Content = String.Format("{0}\n{1}\nRoom:{2}\n{3}\n{4}", u.Code, c.Type, c.Room, c.Campus, s.ToString());
+                label.Content = String.Format("{0}\n{1}\nRoom:{2}\n{3}\n{4}", u.Code, c.Type, c.Room, c.Campus, staffController.GetStaffByID(c.Staff).ToString());
                 timeTable.Children.Add(label);
 
                 insertedindices.Add(timeTable.Children.IndexOf(label));
@@ -143,7 +146,7 @@ namespace HRIS
 
             if (addClassDialog.DialogResult == true && currentUnit.Code != null)
             {
-                LoadClassTimetable(currentUnit, staffController.GetStaffList()[staffController.GetStaffIndex(currentUnit.Coordinator)]);
+                LoadClassTimetable(currentUnit);
             }
 
         }

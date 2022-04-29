@@ -69,7 +69,7 @@ namespace HRIS.Database
                         Title = rdr.GetString(3),
                         Phone = rdr.GetString(4),
                         Room = rdr.GetString(5),
-                        Photo = (rdr[6] as string) ?? "",
+                        Photo = (byte[])rdr[6],
                         Email = rdr.GetString(7),
                         Campus = ParseEnum<Campus>(rdr.GetString(8)),        
                         Category = ParseEnum<Category>(rdr.GetString(9))
@@ -122,7 +122,7 @@ namespace HRIS.Database
                     s.Title = rdr.GetString(3);
                     s.Phone = rdr.GetString(4);
                     s.Room = rdr.GetString(5);
-                    s.Photo = (rdr[6] as string) ?? "";
+                    s.Photo = (byte[])rdr[6];
                     s.Email = rdr.GetString(7);
                     s.Campus = ParseEnum<Campus>(rdr.GetString(8));
                     s.Category = ParseEnum<Category>(rdr.GetString(9));
@@ -367,6 +367,85 @@ namespace HRIS.Database
             return consultations;
         }
 
+        //Add new Class
+        public static void AddNewConsultation(Consultation c)
+        {
+
+            MySqlConnection conn = GetConnection();
+            MySqlDataReader rdr = null;
+            try
+            {
+                conn.Open();
+
+                MySqlCommand cmd = new MySqlCommand("insert into consultation(staff_id, day, start, end) values(?staff_id,  ?day, ?start, ?end)", conn);
+
+
+                cmd.Parameters.AddWithValue("staff_id", c.StaffID);
+                cmd.Parameters.AddWithValue("day", c.Day.ToString());
+                cmd.Parameters.AddWithValue("start", c.StartTime);
+                cmd.Parameters.AddWithValue("end", c.EndTime);
+
+                rdr = cmd.ExecuteReader();
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine("Error connecting to database: " + e);
+            }
+            finally
+            {
+                if (rdr != null)
+                {
+                    rdr.Close();
+                }
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+        }
+
+        //delete a consultation
+        public static void DeleteConsultation(Consultation c)
+        {
+            List<Consultation> consultations = new List<Consultation>();
+            MySqlConnection conn = GetConnection();
+            MySqlDataReader rdr = null;
+
+            try
+            {
+                conn.Open();
+
+
+                //Sql to search events of staff
+                MySqlCommand cmd = new MySqlCommand("delete from consultation " +
+                                                    "where staff_id=?staffId and start = ?start and end = ?end and day = ?day", conn);
+
+                cmd.Parameters.AddWithValue("staffId", c.StaffID);
+                cmd.Parameters.AddWithValue("start", c.StartTime);
+                cmd.Parameters.AddWithValue("end", c.EndTime);
+                cmd.Parameters.AddWithValue("day", c.Day.ToString());
+                rdr = cmd.ExecuteReader();
+
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine("Error connecting to database: " + e);
+            }
+            finally
+            {
+                if (rdr != null)
+                {
+                    rdr.Close();
+                }
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+        }
+
+
         //Get all one unit's classes
         public static List<Class> GetUnitClasses(string unitCode)
         {
@@ -419,9 +498,62 @@ namespace HRIS.Database
 
             return classes;
         }
+        //Get all one staff's classes
+        public static List<Class> GetStaffClasses(int staffId)
+        {
+            List<Class> classes = new List<Class>();
 
-        //Add new Class
-        public static void AddNewClass(Class c)
+            MySqlConnection conn = GetConnection();
+            MySqlDataReader rdr = null;
+
+            try
+            {
+                conn.Open();
+
+                MySqlCommand cmd = new MySqlCommand("select staff, unit_code, campus, day, start, end, type, room" +
+                                                      " from class where staff = ?staff_id", conn);
+
+                cmd.Parameters.AddWithValue("staff_id", staffId);
+                rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    //Create new Unit and set the value of each variable in Unit list
+                    classes.Add(new Class
+                    {
+                        Staff = rdr.GetInt32(0),
+                        UnitCode = rdr.GetString(1),
+                        Campus = ParseEnum<Campus>(rdr.GetString(2)),
+                        Day = ParseEnum<Day>(rdr.GetString(3)),
+                        StartTime = rdr.GetTimeSpan(4),
+                        EndTime = rdr.GetTimeSpan(5),
+                        Type = ParseEnum<Type>(rdr.GetString(6)),
+                        Room = rdr.GetString(7)
+                    });
+                }
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine("Error connecting to database: " + e);
+            }
+            finally
+            {
+                if (rdr != null)
+                {
+                    rdr.Close();
+                }
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            Debug.WriteLine("This staff" + staffId + " has " + classes.Count + " classes in total");
+            return classes;
+        }
+
+            //Add new Class
+            public static void AddNewClass(Class c)
         {
 
             MySqlConnection conn = GetConnection();

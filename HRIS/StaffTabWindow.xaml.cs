@@ -15,6 +15,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Drawing;
 
 namespace HRIS
 {
@@ -67,10 +68,17 @@ namespace HRIS
 
                 consultationList.ItemsSource = consultationController.GetConsultationList(staff.Id);
 
+
+                staffPhoto.Source = staffController.ConvertByteArrayToBitMapImage(staff.Photo);
+
                 //The following info can only be changed if they are empty
                 if (staff.Phone == "" || staff.Phone == null) { phoneInput.IsEnabled = true; } else { phoneInput.IsEnabled = false; }
                 if (staff.Email == "" || staff.Phone == null) { emailInput.IsEnabled = true; } else { emailInput.IsEnabled = false; }
                 if (staff.Room == "" || staff.Phone == null) { roomInput.IsEnabled = true; } else { roomInput.IsEnabled = false; }
+
+                saveChangeBtn.IsEnabled = true;
+                changeImgBtn.IsEnabled = true;
+                addConsulBtn.IsEnabled = true;
             }
 
         }
@@ -82,6 +90,9 @@ namespace HRIS
             s.Email = emailInput.Text;
             s.Room = roomInput.Text;
             s.Title = titleInput.Text;
+            s.Photo = staffController.BitMapImageToByteArray((BitmapImage)staffPhoto.Source);
+
+            //Debug.WriteLine("Phtto is" + s.Photo.Length);
 
             if ((Category)cateInput.SelectedIndex != 0)
             {
@@ -92,6 +103,41 @@ namespace HRIS
       
             
             staffController.UpdateStaffDetails(current_Staff);
+        }
+
+        private void AddNewConsultation(object sender, RoutedEventArgs e)
+        {
+            AddConsultation addConsultationDialog = new AddConsultation();
+            addConsultationDialog.staffID = current_Staff.Id;
+            addConsultationDialog.ShowDialog();
+            
+            if(addConsultationDialog.DialogResult == true)
+            {
+                //reload data
+                consultationList.ItemsSource = consultationController.GetConsultationList(current_Staff.Id);
+            }
+        }
+
+        private void ChangePhoto(object sender, RoutedEventArgs e)
+        {
+           
+
+            BitmapImage image = new BitmapImage(new Uri("/Pictures/profilephoto.png", UriKind.Relative));
+            staffPhoto.Source = image;
+        }
+
+        private void DeleteConsultation(object sender, RoutedEventArgs e)
+        {
+
+            if (consultationList.SelectedItem != null)
+            {
+                int consultationIdx = consultationList.SelectedIndex;
+                Consultation c = consultationController.GetConsultationList(current_Staff.Id)[consultationIdx];
+                consultationController.DeleteConsultation(c);
+
+                //reload data
+                consultationList.ItemsSource = consultationController.GetConsultationList(current_Staff.Id);
+            }
         }
     }
 }

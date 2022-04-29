@@ -57,12 +57,34 @@ namespace HRIS
             c.Staff = staffController.GetStaffList()[coordInput.SelectedIndex].Id;
             c.UnitCode = unitCode;
 
+            List<Class> classList = classController.GetClassList(unitCode);
+            bool isTutorialSet = false;
+
             if (unitCode != "" && unitCode != null) {
-                classController.AddNewClass(c);
+
+                //Only on tutorial can be set for each unit
+                foreach (Class cls in classList) {
+                    if (cls.Type == Type.Tutorial) {
+                        isTutorialSet = true;
+                    }
+                }
+
+                if (isTutorialSet == true)
+                {
+                    string message = "The tutorial for this unit has already been set!";
+                    MessageBox.Show(message);
+                }
+                else {
+
+                    classController.AddNewClass(c);
+                    DialogResult = true;
+                    Close();
+                }
+               
+
             }
 
-            DialogResult = true;
-            Close();
+
         }
     }
 }

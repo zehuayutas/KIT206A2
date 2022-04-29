@@ -25,6 +25,14 @@ namespace HRIS.Controller
             return classList;
         }
 
+
+        public List<Class> GetClassListByStaff(int staffId)
+        {
+            classList = DBAdapter.GetStaffClasses(staffId);
+            return classList;
+        }
+
+
         public void AddNewClass(Class c) 
         {
             DBAdapter.AddNewClass(c);
